@@ -1,0 +1,30 @@
+name "Youssef Briki"
+contact email "youssef@example.com", github "youssefbriki1", location "Montréal, QC"
+
+section "Experience":
+  entry role "AI Engineering Intern"
+        org  "Desjardins"
+        when "Summer 2025"
+        bullets:
+          - "Built domain-specific RAG on a knowledge graph"
+          - "Reduced retrieval latency by 35% (P95)"
+          - "Productionized pipelines on Balam HPC cluster"
+
+section "Projects":
+  entry role "LabMate – Lab Q&A Agent"
+        org  "Personal / AC collab"
+        when "2024–2025"
+        bullets:
+          - "Multi-hop retrieval over manuals; vLLM serving"
+          - "Tools: FAISS, LangChain, spaCy coref, SRL microservices"
+
+section "Education":
+  entry role "B.Sc. Computer Science"
+        org  "Université de Montréal"
+        when "2022–2026"
+        bullets:
+          - "GPA 3.7/4.3, ICPC participant"
+          - "NLP, ML, HPC coursework"
+
+section "Skills":
+  tags: "Python, Rust, Java, LangChain, vLLM, FAISS, Docker, gRPC, HPC"

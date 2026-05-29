@@ -1,0 +1,15 @@
+[package]
+name = "cv_lang"
+version = "0.1.0"
+edition = "2024"
+description = "A declarative DSL that compiles CV/resume source files into LaTeX (Jake's resume template)."
+
+[lib]
+name = "cv_lang"
+path = "src/lib.rs"
+
+[[bin]]
+name = "cv_lang"
+path = "src/main.rs"
+
+[dependencies]

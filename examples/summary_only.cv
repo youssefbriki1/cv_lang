@@ -1,0 +1,33 @@
+name "Youssef Briki"
+contact email "youssef@example.com", github "youssefbriki1"
+
+summary:
+  - "Undergrad CS (grad 2026). Passion: NLP + HPC; building reliable RAG."
+
+section "Experience":
+  entry role "NLP Intern"
+        org  "AC / UofT"
+        when "Winter 2025"
+        stack: "Python, spaCy, SRL, FAISS"
+        bullets:
+          - "Authored SRL microservice used by 2 internal teams"
+          - "Cut preprocessing time 40% by batching + caching"
+
+section "Projects":
+  entry role "KG-Builder"
+        org  "Course + personal"
+        when "2024"
+        link "https://github.com/you/kg-builder"
+        stack: "RDF, NetworkX, PostgreSQL"
+        bullets:
+          - "Turned papers into procedural graphs; query with Cypher-like DSL"
+
+section "Education":
+  entry role "B.Sc. Computer Science"
+        org  "UdeM"
+        when "2022–2026"
+        bullets:
+          - "GPA 3.7/4.3; relevant: NLP, ML, Databases, Parallel Prog"
+
+section "Skills":
+  tags: "Python, Rust, Java, SQL, Docker, Git, Linux"

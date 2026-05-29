@@ -1,0 +1,35 @@
+# Extended constructs: summary, per-entry location/link/stack, and a sidebar.
+name "Youssef Briki"
+
+summary:
+  - "SWE + NLP, focused on RAG and knowledge graphs for automation."
+
+section "Experience":
+  entry role "AI Engineering Intern"
+        org  "Desjardins"
+        when "Summer 2025"
+        location "Montréal, QC"
+        link "https://desjardins.com"
+        stack: "Python, LangChain, FAISS, vLLM, Docker, GCP"
+        bullets:
+          - "Built domain RAG over Desjardins knowledge graph"
+          - "Cut retrieval P95 by 35% via cache + re-ranking"
+
+section "Projects":
+  entry role "LabMate – Lab Q&A Agent"
+        org  "Acceleration Consortium"
+        when "2024–2025"
+        link "https://github.com/your/labmate"
+        stack: "Python, vLLM, spaCy-coref, SRL, gRPC, FAISS"
+        bullets:
+          - "Procedural KG extraction and multi-hop retrieval"
+          - "gRPC microservices for SRL/NER/coref; Dockerized"
+
+# Jake-style sidebar (folded into the header in this renderer)
+sidebar:
+  location "Montréal, QC"
+  email "youssef@example.com"
+  github "github.com/youssefbriki1"
+  linkedin "linkedin.com/in/youssefbriki"
+  languages "English, French"
+  skills "Python, Rust, Java, RAG, KG, vLLM, FAISS, Docker"

@@ -271,7 +271,10 @@ mod tests {
     fn doc_with_one_entry() -> Document {
         Document {
             name: Some("R&D Person".into()),
-            contact: vec![Field { key: "email".into(), value: "a@b.com".into() }],
+            contact: vec![Field {
+                key: "email".into(),
+                value: "a@b.com".into(),
+            }],
             summary: vec![],
             sidebar: vec![],
             sections: vec![Section {
@@ -321,7 +324,10 @@ mod tests {
 
     #[test]
     fn github_handle_becomes_full_url() {
-        let field = Field { key: "github".into(), value: "octocat".into() };
+        let field = Field {
+            key: "github".into(),
+            value: "octocat".into(),
+        };
         let snippet = render_contact_field(&field);
         assert!(snippet.contains("https://github.com/octocat"));
         assert!(snippet.contains("\\underline{octocat}"));

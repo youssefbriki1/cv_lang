@@ -7,7 +7,11 @@ fn compile_example(name: &str) -> String {
     let path = format!("{}/examples/{name}", env!("CARGO_MANIFEST_DIR"));
     let source = std::fs::read_to_string(&path).expect("read example");
     let out = compile(&source).expect("compile should succeed");
-    assert!(out.warnings.is_empty(), "{name} produced warnings: {:?}", out.warnings);
+    assert!(
+        out.warnings.is_empty(),
+        "{name} produced warnings: {:?}",
+        out.warnings
+    );
     out.latex
 }
 

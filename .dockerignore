@@ -1,0 +1,10 @@
+target/
+.git/
+.github/
+*.tex
+*.pdf
+*.aux
+*.log
+*.out
+examples/*.tex
+examples/*.pdf

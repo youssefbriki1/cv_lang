@@ -22,7 +22,12 @@ const USAGE: &str = "usage: cv_lang <input.cv> [-o <output.tex>] [--pdf]";
 
 fn main() -> ExitCode {
     let args = match parse_args(std::env::args().skip(1)) {
-        Ok(args) => args,
+        Ok(Some(args)) => args,
+        Ok(None) => {
+            // -h/--help: usage to stdout, success exit.
+            println!("{USAGE}");
+            return ExitCode::SUCCESS;
+        }
         Err(message) => {
             eprintln!("error: {message}\n{USAGE}");
             return ExitCode::FAILURE;
@@ -38,7 +43,9 @@ fn main() -> ExitCode {
     }
 }
 
-fn parse_args(args: impl Iterator<Item = String>) -> Result<Args, String> {
+/// Returns `Ok(None)` when help was requested, `Ok(Some(args))` on a valid
+/// invocation, and `Err` on a usage error.
+fn parse_args(args: impl Iterator<Item = String>) -> Result<Option<Args>, String> {
     let mut input: Option<PathBuf> = None;
     let mut output: Option<PathBuf> = None;
     let mut pdf = false;
@@ -46,7 +53,7 @@ fn parse_args(args: impl Iterator<Item = String>) -> Result<Args, String> {
     let mut args = args.peekable();
     while let Some(arg) = args.next() {
         match arg.as_str() {
-            "-h" | "--help" => return Err("showing usage".into()),
+            "-h" | "--help" => return Ok(None),
             "--pdf" => pdf = true,
             "-o" | "--output" => {
                 let value = args
@@ -67,7 +74,7 @@ fn parse_args(args: impl Iterator<Item = String>) -> Result<Args, String> {
     }
 
     let input = input.ok_or("no input file given")?;
-    Ok(Args { input, output, pdf })
+    Ok(Some(Args { input, output, pdf }))
 }
 
 fn run(args: &Args) -> Result<(), String> {
@@ -126,13 +133,13 @@ fn run_pdflatex(tex_path: &Path) {
 mod tests {
     use super::*;
 
-    fn parse(args: &[&str]) -> Result<Args, String> {
+    fn parse(args: &[&str]) -> Result<Option<Args>, String> {
         parse_args(args.iter().map(|s| s.to_string()))
     }
 
     #[test]
     fn parses_input_only() {
-        let args = parse(&["resume.cv"]).unwrap();
+        let args = parse(&["resume.cv"]).unwrap().unwrap();
         assert_eq!(args.input, PathBuf::from("resume.cv"));
         assert!(args.output.is_none());
         assert!(!args.pdf);
@@ -140,9 +147,16 @@ mod tests {
 
     #[test]
     fn parses_output_and_pdf_flag() {
-        let args = parse(&["resume.cv", "-o", "out.tex", "--pdf"]).unwrap();
+        let args = parse(&["resume.cv", "-o", "out.tex", "--pdf"])
+            .unwrap()
+            .unwrap();
         assert_eq!(args.output, Some(PathBuf::from("out.tex")));
         assert!(args.pdf);
+    }
+
+    #[test]
+    fn help_returns_none() {
+        assert!(parse(&["--help"]).unwrap().is_none());
     }
 
     #[test]

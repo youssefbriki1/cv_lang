@@ -24,7 +24,11 @@ struct Parser {
 
 impl Parser {
     fn new(tokens: Vec<Token>) -> Self {
-        Parser { tokens, pos: 0, warnings: Vec::new() }
+        Parser {
+            tokens,
+            pos: 0,
+            warnings: Vec::new(),
+        }
     }
 
     // --- cursor primitives ---------------------------------------------------
@@ -146,7 +150,10 @@ impl Parser {
                         }
                     }
                     other => {
-                        self.warn(line, format!("unknown top-level construct '{other}'; ignored"));
+                        self.warn(
+                            line,
+                            format!("unknown top-level construct '{other}'; ignored"),
+                        );
                         self.skip_line();
                     }
                 },
@@ -243,7 +250,10 @@ impl Parser {
 
         if !self.eat(&TokenKind::Indent) {
             self.warn(line, format!("section '{title}' is empty"));
-            return Some(Section { title, body: SectionBody::Entries(Vec::new()) });
+            return Some(Section {
+                title,
+                body: SectionBody::Entries(Vec::new()),
+            });
         }
 
         self.skip_newlines();
@@ -309,7 +319,9 @@ impl Parser {
     /// introduces a dash block. The field name drives assignment via `match`.
     fn parse_entry_field(&mut self, entry: &mut Entry) {
         let line = self.peek_line();
-        let Some(name) = self.take_ident() else { return };
+        let Some(name) = self.take_ident() else {
+            return;
+        };
         self.eat(&TokenKind::Colon); // optional
 
         match self.peek() {
@@ -322,9 +334,7 @@ impl Parser {
                     "location" => entry.location = Some(value),
                     "link" => entry.link = Some(value),
                     "stack" => entry.stack = Some(value),
-                    other => {
-                        self.warn(line, format!("unknown entry field '{other}'; ignored"))
-                    }
+                    other => self.warn(line, format!("unknown entry field '{other}'; ignored")),
                 }
             }
             TokenKind::Newline => {
@@ -369,7 +379,13 @@ section \"Skills\":
         let (doc, warnings) = parse_src(src);
         assert_eq!(doc.name.as_deref(), Some("Youssef Briki"));
         assert_eq!(doc.contact.len(), 2);
-        assert_eq!(doc.contact[0], Field { key: "email".into(), value: "y@example.com".into() });
+        assert_eq!(
+            doc.contact[0],
+            Field {
+                key: "email".into(),
+                value: "y@example.com".into()
+            }
+        );
         assert_eq!(doc.sections.len(), 2);
 
         match &doc.sections[0].body {
@@ -404,7 +420,9 @@ section \"Projects\":
           - \"Multi-hop retrieval\"
 ";
         let (doc, warnings) = parse_src(src);
-        let SectionBody::Entries(es) = &doc.sections[0].body else { panic!() };
+        let SectionBody::Entries(es) = &doc.sections[0].body else {
+            panic!()
+        };
         let e = &es[0];
         assert_eq!(e.location.as_deref(), Some("Montreal"));
         assert_eq!(e.link.as_deref(), Some("https://example.com"));
@@ -436,7 +454,9 @@ section \"Experience\":
         mood \"great\"
 ";
         let (doc, warnings) = parse_src(src);
-        let SectionBody::Entries(es) = &doc.sections[0].body else { panic!() };
+        let SectionBody::Entries(es) = &doc.sections[0].body else {
+            panic!()
+        };
         assert_eq!(es[0].role.as_deref(), Some("Dev"));
         assert_eq!(warnings.len(), 1);
         assert!(warnings[0].message.contains("mood"));

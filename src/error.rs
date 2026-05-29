@@ -34,11 +34,19 @@ pub struct Diagnostic {
 
 impl Diagnostic {
     pub fn error(line: usize, message: impl Into<String>) -> Self {
-        Diagnostic { level: Level::Error, message: message.into(), line }
+        Diagnostic {
+            level: Level::Error,
+            message: message.into(),
+            line,
+        }
     }
 
     pub fn warning(line: usize, message: impl Into<String>) -> Self {
-        Diagnostic { level: Level::Warning, message: message.into(), line }
+        Diagnostic {
+            level: Level::Warning,
+            message: message.into(),
+            line,
+        }
     }
 
     pub fn is_error(&self) -> bool {

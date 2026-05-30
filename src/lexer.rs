@@ -256,4 +256,56 @@ mod tests {
         let got = kinds(src);
         assert!(got.contains(&TokenKind::Dash));
     }
+
+    #[test]
+    fn empty_input_is_just_eof() {
+        assert_eq!(kinds(""), vec![TokenKind::Eof]);
+    }
+
+    #[test]
+    fn comment_only_input_is_just_eof() {
+        assert_eq!(
+            kinds("# just a comment\n   # another\n"),
+            vec![TokenKind::Eof]
+        );
+    }
+
+    #[test]
+    fn crlf_line_endings_are_handled() {
+        // `str::lines()` strips the trailing \r, so no stray characters leak in.
+        let got = kinds("name \"X\"\r\ncontact email \"a@b.c\"\r\n");
+        assert_eq!(got[0], TokenKind::Ident("name".into()));
+        assert_eq!(got[1], TokenKind::Str("X".into()));
+        assert!(
+            !got.iter()
+                .any(|k| matches!(k, TokenKind::Str(s) if s.contains('\r')))
+        );
+    }
+
+    #[test]
+    fn tab_indentation_emits_indent() {
+        let src = "section \"S\":\n\tentry role \"R\"\n";
+        let got = kinds(src);
+        assert!(got.contains(&TokenKind::Indent));
+    }
+
+    #[test]
+    fn trailing_comment_after_string_is_ignored() {
+        let got = kinds("name \"Ada\"   # a trailing comment\n");
+        assert_eq!(
+            got,
+            vec![
+                TokenKind::Ident("name".into()),
+                TokenKind::Str("Ada".into()),
+                TokenKind::Newline,
+                TokenKind::Eof,
+            ]
+        );
+    }
+
+    #[test]
+    fn hash_inside_a_string_is_not_a_comment() {
+        let got = kinds("name \"C# Developer\"\n");
+        assert_eq!(got[1], TokenKind::Str("C# Developer".into()));
+    }
 }

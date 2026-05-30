@@ -20,13 +20,13 @@ RUN touch src/main.rs src/lib.rs && cargo build --release
 FROM debian:bookworm-slim AS runtime
 
 # Packages covering the Jake-template preamble: titlesec, enumitem, hyperref,
-# fancyhdr, tabularx, babel, color, fullpage, marvosym, latexsym.
+# fancyhdr, tabularx, babel, color, fullpage. (No marvosym/latexsym, so
+# texlive-fonts-extra is not needed — keeps the image smaller.)
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         texlive-latex-recommended \
         texlive-latex-extra \
         texlive-fonts-recommended \
-        texlive-fonts-extra \
     && rm -rf /var/lib/apt/lists/*
 
 COPY --from=builder /app/target/release/cv_lang /usr/local/bin/cv_lang

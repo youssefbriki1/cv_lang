@@ -1,0 +1,23 @@
+# Edge cases: special characters, comments, an unknown field, and an empty section.
+# This file intentionally produces warnings (the `mood` field is unknown) yet
+# still compiles to a valid PDF — the language is forgiving by design.
+
+name "Æsop O'Brien-Smith"
+contact email "as+cv@example.com", phone "+1 (555) 010-2020", website "example.com/~as"
+
+summary:
+  - "Handles tricky text: R&D, 100% uptime, $1M budget, a_b_c, {braces} & ~tildes~."
+
+section "Experience":
+  entry role "C# & C++ Engineer"
+        org  "Acme R&D"
+        when "2024–Present"
+        mood "great"                # unknown field -> warning, ignored
+        bullets:
+          - "Cut costs by 35% and saved \$2M."
+          - "Maintained 99.9% SLA across A_B_C services."
+
+section "Empty Section":
+
+section "Skills":
+  tags: "Rust, C#, C++, LaTeX, 50% theory & 50% practice"

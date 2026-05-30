@@ -6,3 +6,8 @@
 *.aux
 *.log
 *.out
+
+# ...but golden snapshot fixtures are checked in
+!tests/golden/*.tex
+
+.vscode

@@ -50,21 +50,29 @@ Pipeline: **Lexer → Parser → Renderer → CLI**.
   Unknown fields/constructs become **warnings**, not errors, and the line is skipped.
 - `src/renderer.rs` — walks the AST and emits a **standalone** Jake-template document
   (`\documentclass … \end{document}`). All user text passes through `latex_escape`. The
-  Jake preamble + helper macros live in a `PREAMBLE` constant.
+  Jake preamble + helper macros live in a `PREAMBLE` constant. Macros use `\linewidth`
+  (not `\textwidth`) so they render correctly in either column.
 - `src/lib.rs` — public entry point `compile(source) -> Result<Compiled, Diagnostic>`
   where `Compiled { latex, warnings }`.
-- `src/main.rs` — CLI: `cv_lang <input.cv> [-o <output.tex>] [--pdf]`. Always writes the
-  `.tex`; `--pdf` runs `pdflatex` best-effort (a missing binary is a warning, not a crash).
+- `src/main.rs` — CLI: `cv_lang <input.cv> [-o <output.tex>] [--pdf] [--check] [--strict]
+  [--format human|json]`. Writes the `.tex` (unless `--check`); `--pdf` runs `pdflatex`
+  best-effort (a missing binary is a warning). `--strict` makes warnings a non-zero exit;
+  `--format json` prints a machine-readable result object. Human diagnostics show the
+  offending source line with a caret.
 - `src/error.rs` — `Diagnostic { level, message, line }`, `Level::{Warning, Error}`.
 
-Tests: unit tests live in each module (`#[cfg(test)]`); end-to-end tests in
-`tests/integration.rs` compile every `examples/*.cv`.
+Tests: unit tests live in each module (`#[cfg(test)]`); `tests/integration.rs` compiles the
+core example fixtures; `tests/golden.rs` snapshots rendered LaTeX into `tests/golden/*.tex`
+(re-bless with `CV_LANG_BLESS=1`); `tests/pdf.rs` compiles every `examples/*.cv` to a real
+PDF (skipped when `pdflatex` is absent).
 
-Design note: the **sidebar is currently folded into the header** (classic Jake is
-single-column). A true two-column sidebar is a roadmap item.
+Layout note: with **no `sidebar`** the renderer emits the classic single-column Jake
+template; when a **`sidebar` is present** it emits a **two-column** layout (left rail with
+name/contact/sidebar fields, right column with summary/sections) via `minipage`s.
 
 Other paths: `examples/*.cv` (fixtures), `skills/cv-lang/SKILL.md` (portable Agent Skill
-teaching an LLM the syntax), `Dockerfile` (PDF-capable image), `.github/workflows/ci.yml`.
+teaching an LLM the syntax), `Dockerfile` (PDF-capable image), `.github/workflows/ci.yml`,
+`rust-toolchain.toml` (pinned toolchain), `CONTRIBUTING.md`.
 
 ## Build & Run
 
@@ -72,7 +80,9 @@ teaching an LLM the syntax), `Dockerfile` (PDF-capable image), `.github/workflow
 cargo build                 # compile
 cargo run -- <file.cv>      # compile a .cv (writes <file>.tex)
 cargo run -- <file.cv> --pdf# also run pdflatex (needs a TeX install)
+cargo run -- <file.cv> --check --json   # validate only, machine-readable output
 cargo test                  # run all tests
+CV_LANG_BLESS=1 cargo test --test golden  # re-bless golden snapshots
 cargo test <name>           # run a single test by name
 cargo clippy --all-targets  # lint
 cargo fmt --all             # format

@@ -1,0 +1,5 @@
+# Pin the toolchain so local builds, CI, and Docker all agree.
+# Edition 2024 requires Rust >= 1.85.
+[toolchain]
+channel = "stable"
+components = ["rustfmt", "clippy"]

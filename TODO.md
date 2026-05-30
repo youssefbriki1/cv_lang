@@ -4,48 +4,44 @@ Roadmap for turning `cv_lang` into the deterministic backend of an AI resume bui
 (Chrome extension → agent → `.cv` → LaTeX/PDF). Ordered roughly by priority.
 
 ## Next up
-- [ ] Open the PR for `feat/agent-skill-docs-ci-docker` and confirm CI goes green.
-- [ ] Verify the Docker image end-to-end (couldn't run locally — no `pdflatex`):
-      `docker build -t cv_lang .` then
-      `docker run --rm -v "$PWD/examples":/work cv_lang core.cv --pdf` → expect a PDF.
+- [x] Open the PR for `feat/agent-skill-docs-ci-docker` and confirm CI goes green.
+- [x] Verify the Docker image end-to-end (build + `--pdf` round-trip).
 - [ ] In repo Settings → Actions, confirm workflow permissions allow GHCR push
-      (the `docker` job needs `packages: write`).
+      (the `docker` job needs `packages: write`). *(manual — needs repo admin)*
 
 ## Language & compiler
-- [ ] True two-column sidebar layout (currently folded into the header).
-- [ ] Add a `--check` / lint mode: parse only, print warnings, non-zero exit on warnings
-      (useful for the agent to validate its own `.cv` output).
-- [ ] Emit warnings as structured JSON (`--format json`) so the agent can consume them.
-- [ ] Support multiple resume templates beyond Jake (pluggable renderer / `--template`).
-- [ ] Richer contact/sidebar key handling (phone, website, scholar, ORCID).
-- [ ] Friendlier diagnostics: show the offending source line + a caret.
+- [x] True two-column sidebar layout (rendered when a `sidebar` is present).
+- [x] `--check` mode: parse only, print warnings, write nothing. `--strict` makes
+      warnings a non-zero exit.
+- [x] Emit warnings/results as structured JSON (`--format json` / `--json`).
+- [x] Richer contact/sidebar key handling (phone, website, x/twitter, gitlab,
+      orcid, scholar).
+- [x] Friendlier diagnostics: show the offending source line + a caret.
+- [ ] Multiple resume templates beyond Jake (pluggable renderer / `--template`).
 
 ## Testing & quality
-- [ ] Snapshot tests for rendered LaTeX (e.g. `insta`) to catch unintended output drift.
-- [ ] A test that actually runs `pdflatex` on each example (gated on TeX being present,
-      e.g. only in the Docker/CI job).
-- [ ] Fuzz / property tests for the lexer (unterminated strings, weird indentation, tabs).
-- [ ] Add `examples/` covering edge cases: empty sections, unknown fields, comments,
-      special chars (`& % _ # $`).
+- [x] Golden/snapshot tests for rendered LaTeX (`tests/golden/`, stdlib only).
+- [x] A test that actually runs `pdflatex` on each example (`tests/pdf.rs`, gated
+      on TeX being present).
+- [x] Lexer robustness tests (tabs, CRLF, comment-only, empty, `#` in strings).
+- [x] Edge-case example (`examples/edge_cases.cv`: special chars, comments,
+      unknown field, empty section).
 
 ## Packaging & infra
-- [ ] Pin the Rust toolchain (`rust-toolchain.toml`) so local + CI match.
-- [ ] Cache `pdflatex` runs / trim the TeX Live package set if the image is too big
-      (dropping unused `marvosym`/`latexsym` lets you skip `texlive-fonts-extra`).
-- [ ] Publish a tagged release (`vX.Y.Z`) and document the GHCR image tag scheme.
+- [x] Pin the Rust toolchain (`rust-toolchain.toml`).
+- [x] Trim the TeX Live package set / drop unused preamble packages
+      (removed marvosym + latexsym, dropped `texlive-fonts-extra`).
+- [x] Publish a tagged release (`v0.1.0`) and document the GHCR image tag scheme.
 - [ ] Optional: build a static musl binary for a tiny no-PDF image variant.
 
-## AI-agent integration
-- [ ] Thin HTTP service: `POST /compile` with `.cv` body → `{ tex, pdf?, warnings }`.
-      (Keeps the backend from shelling out; small web dep like `axum`.)
-- [ ] Backend glue: call Claude with `skills/cv-lang/SKILL.md` to author `.cv` from
-      scraped text, then compile.
-- [ ] Chrome extension: scrape page → send to backend → preview/download the PDF.
-- [ ] Prompt/skill hardening: test the SKILL on real scraped inputs; iterate on the
-      authoring rules so the model reliably produces warning-free `.cv`.
-- [ ] Guardrails: cap input size, sanitize/validate before compiling, rate-limit.
-
 ## Docs
+- [x] CONTRIBUTING.md (build, test, fmt, clippy, golden-bless workflow).
+- [x] Keep README / CLAUDE.md / SKILL.md in sync (new flags, two-column, keys).
 - [ ] Add a short GIF/screenshot of a rendered resume to the README.
-- [ ] Document the HTTP API once it exists.
-- [ ] Write a CONTRIBUTING.md (build, test, fmt, clippy expectations).
+
+## AI-agent integration (separate projects — out of scope for this repo)
+- [ ] Thin HTTP service: `POST /compile` with `.cv` → `{ tex, pdf?, warnings }`.
+- [ ] Backend glue: call Claude with `skills/cv-lang/SKILL.md` to author `.cv`.
+- [ ] Chrome extension: scrape page → backend → preview/download the PDF.
+- [ ] Prompt/skill hardening on real scraped inputs.
+- [ ] Guardrails: cap input size, sanitize/validate, rate-limit.

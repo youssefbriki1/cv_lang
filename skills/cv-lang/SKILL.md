@@ -107,6 +107,23 @@ docker run --rm -v "$PWD":/work \
 Warnings (unknown fields/constructs) are printed to stderr; a non-zero exit only
 happens on a hard error such as an unterminated string.
 
+### Self-validating output (recommended for agents)
+
+Validate a `.cv` without writing files, and get machine-readable diagnostics:
+
+```bash
+cv_lang resume.cv --check --json
+# {"ok":true,"check":true,"output":null,"pdf":null,"warnings":[ ... ]}
+```
+
+- `--check` — parse/validate only; writes nothing.
+- `--json` — emit one JSON object (`ok`, `output`, `pdf`, `warnings[]`). On a hard
+  error: `{"ok":false,"error":{"level":"error","line":N,"message":"..."}}`.
+- `--strict` — exit non-zero if there are any warnings.
+
+An agent should compile with `--check --json` first, inspect `warnings`, fix the
+`.cv` until the list is empty, then do the real `--pdf` run.
+
 ## Worked example
 
 Source facts (e.g. scraped):
@@ -140,7 +157,12 @@ document with the `&`/`%`-safe content already escaped.
 
 ## Gotchas
 
-- **Sidebar** is currently folded into the header contact line (classic Jake is
-  single-column). A true left-column sidebar is on the roadmap.
+- **Sidebar drives the layout.** With **no** `sidebar`, the output is the classic
+  single-column Jake template. With a `sidebar`, it becomes a **two-column**
+  layout (left rail = name + contact + sidebar fields; right column = summary +
+  sections). Put `sidebar` in only if you want two columns.
+- **Linkified keys** (in `contact`/`sidebar`): `email`, `github`, `gitlab`,
+  `linkedin`, `twitter`/`x`, `orcid`, `scholar`, `website`/`site`/`link`/`url`.
+  Other keys (`location`, `phone`, `languages`, `skills`, …) render as plain text.
 - **`link`** on an entry turns the role into a clickable hyperlink.
 - **`stack`** renders as the first, italicised "Stack:" bullet of the entry.

@@ -1,0 +1,115 @@
+\documentclass[letterpaper,11pt]{article}
+
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\addtolength{\oddsidemargin}{-0.5in}
+\addtolength{\evensidemargin}{-0.5in}
+\addtolength{\textwidth}{1in}
+\addtolength{\topmargin}{-.5in}
+\addtolength{\textheight}{1.0in}
+
+\urlstyle{same}
+
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+% Section heading formatting
+\titleformat{\section}{
+  \vspace{-4pt}\scshape\raggedright\large
+}{}{0em}{}[\color{black}\titlerule \vspace{-5pt}]
+
+% Resume helper macros (width-relative so they work in either column)
+\newcommand{\resumeItem}[1]{
+  \item\small{
+    {#1 \vspace{-2pt}}
+  }
+}
+
+\newcommand{\resumeSubheading}[4]{
+  \vspace{-2pt}\item
+    \begin{tabular*}{0.97\linewidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & #2 \\
+      \textit{\small#3} & \textit{\small #4} \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeSubSubheading}[2]{
+    \item
+    \begin{tabular*}{0.97\linewidth}{l@{\extracolsep{\fill}}r}
+      \textit{\small#1} & \textit{\small #2} \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\renewcommand\labelitemii{$\vcenter{\hbox{\tiny$\bullet$}}$}
+
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.15in, label={}]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-5pt}}
+
+\begin{document}
+
+\begin{center}
+    \textbf{\Huge \scshape Youssef Briki} \\ \vspace{1pt}
+    \small \href{mailto:youssef@example.com}{\underline{youssef@example.com}} $|$ \href{https://github.com/youssefbriki1}{\underline{youssefbriki1}}
+\end{center}
+
+\section{Summary}
+\resumeItemListStart
+  \resumeItem{Undergrad CS (grad 2026). Passion: NLP + HPC; building reliable RAG.}
+\resumeItemListEnd
+
+\section{Experience}
+  \resumeSubHeadingListStart
+    \resumeSubheading
+      {NLP Intern}{Winter 2025}
+      {AC / UofT}{}
+      \resumeItemListStart
+        \resumeItem{\textit{Stack:} Python, spaCy, SRL, FAISS}
+        \resumeItem{Authored SRL microservice used by 2 internal teams}
+        \resumeItem{Cut preprocessing time 40\% by batching + caching}
+      \resumeItemListEnd
+  \resumeSubHeadingListEnd
+
+\section{Projects}
+  \resumeSubHeadingListStart
+    \resumeSubheading
+      {\href{https://github.com/you/kg-builder}{\underline{KG-Builder}}}{2024}
+      {Course + personal}{}
+      \resumeItemListStart
+        \resumeItem{\textit{Stack:} RDF, NetworkX, PostgreSQL}
+        \resumeItem{Turned papers into procedural graphs; query with Cypher-like DSL}
+      \resumeItemListEnd
+  \resumeSubHeadingListEnd
+
+\section{Education}
+  \resumeSubHeadingListStart
+    \resumeSubheading
+      {B.Sc. Computer Science}{2022–2026}
+      {UdeM}{}
+      \resumeItemListStart
+        \resumeItem{GPA 3.7/4.3; relevant: NLP, ML, Databases, Parallel Prog}
+      \resumeItemListEnd
+  \resumeSubHeadingListEnd
+
+\section{Skills}
+  \begin{itemize}[leftmargin=0.15in, label={}]
+    \small{\item{Python, Rust, Java, SQL, Docker, Git, Linux}}
+  \end{itemize}
+
+
+\end{document}

@@ -63,13 +63,35 @@ one, use the Docker image below.
 cargo run -- examples/core.cv              # writes examples/core.tex
 cargo run -- examples/core.cv -o out.tex   # custom output path
 cargo run -- examples/core.cv --pdf        # also run pdflatex (if installed)
+cargo run -- examples/core.cv --check      # validate only; write nothing
+cargo run -- examples/core.cv --strict     # exit non-zero if there are warnings
+cargo run -- examples/core.cv --json       # machine-readable result + diagnostics
 ```
 
 ```
-usage: cv_lang <input.cv> [-o <output.tex>] [--pdf]
+usage: cv_lang <input.cv> [-o <output.tex>] [--pdf] [--check] [--strict] [--format human|json]
 ```
 
-Warnings (unknown fields/constructs) are printed to stderr; the only hard error
+Flags:
+
+- `--pdf` — also run `pdflatex` (a missing binary is a warning, not a crash).
+- `--check` — parse and validate only; do not write any files.
+- `--strict` — treat warnings as failures (non-zero exit).
+- `--format json` (or `--json`) — emit a single JSON object with the output
+  path(s) and diagnostics, e.g.:
+  ```json
+  {"ok":true,"check":false,"output":"core.tex","pdf":null,"warnings":[]}
+  ```
+
+In human mode, warnings point at the offending source line:
+
+```
+warning: line 4: unknown entry field 'mood'; ignored
+     4 |         mood "great"
+       |         ^^^^^^^^^^^^
+```
+
+Warnings (unknown fields/constructs) never stop compilation; the only hard error
 is malformed input such as an unterminated string.
 
 ## Language reference
@@ -107,6 +129,10 @@ Top-level optional blocks:
 - `summary:` — a list of `- "..."` bullets at the top of the resume
 - `sidebar:` — `key "value"` lines (location, email, github, linkedin, languages, skills)
 
+Linkified contact/sidebar keys: `email`, `github`, `gitlab`, `linkedin`,
+`twitter`/`x`, `orcid`, `scholar`, `website`/`site`/`link`/`url`. Other keys
+(e.g. `location`, `phone`, `languages`, `skills`) render as plain text.
+
 ```
 summary:
   - "SWE + NLP, focused on RAG and knowledge graphs."
@@ -130,8 +156,10 @@ sidebar:
   skills "Python, Rust, RAG, Docker"
 ```
 
-> Note: the sidebar is currently folded into the header (classic Jake is
-> single-column). A true left-column layout is on the roadmap.
+> Layout: with **no** `sidebar`, the document is the classic single-column Jake
+> template. When a `sidebar` **is** present, `cv_lang` switches to a two-column
+> layout — a left rail (name + contact + sidebar fields) beside the main column
+> (summary + sections).
 
 ## Examples
 
@@ -140,6 +168,8 @@ Ready-to-compile samples live in [`examples/`](examples/):
 - `core.cv` — core constructs only
 - `extended.cv` — summary, per-entry location/link/stack, and a sidebar
 - `summary_only.cv` — a mix used as a smoke test
+- `edge_cases.cv` — special characters, comments, an unknown field, and an empty
+  section (compiles with warnings — the language is forgiving)
 
 ```bash
 cargo run -- examples/extended.cv --pdf
@@ -158,7 +188,12 @@ docker run --rm -v "$PWD/examples":/work cv_lang core.cv --pdf
 # -> examples/core.tex and examples/core.pdf
 ```
 
-Published images: `ghcr.io/youssefbriki1/cv_prog_language` (built by CI).
+Published images: `ghcr.io/youssefbriki1/cv_prog_language` (built and pushed by
+CI). Tag scheme:
+
+- `:latest` — the tip of `main`.
+- `:vX.Y.Z` — a tagged release (e.g. `:v0.1.0`).
+- `:sha-<commit>` — every pushed commit on `main`/tags.
 
 ## Using cv_lang from an AI agent
 
@@ -187,16 +222,22 @@ into your agent's skill directory (or `.claude/skills/`).
 ## Development
 
 ```bash
-cargo test                          # unit + integration tests
+cargo test                          # unit + integration + golden + pdf tests
 cargo clippy --all-targets          # lints
 cargo fmt --all                     # format
 ```
 
-CI (`.github/workflows/ci.yml`) runs `fmt --check`, `clippy -D warnings`, and the
-test suite, then builds the Docker image (and pushes it to GHCR on `main`/tags).
+Tests include golden snapshots of the rendered LaTeX (`tests/golden/`) and a
+`pdflatex` round-trip over every example (`tests/pdf.rs`, skipped when TeX is
+absent). After an intentional renderer change, re-bless the snapshots with
+`CV_LANG_BLESS=1 cargo test --test golden`. See [`CONTRIBUTING.md`](CONTRIBUTING.md).
+
+The toolchain is pinned in `rust-toolchain.toml`. CI (`.github/workflows/ci.yml`)
+runs `fmt --check`, `clippy -D warnings`, and the test suite, then builds the
+Docker image (and pushes it to GHCR on `main`/tags).
 
 ## Roadmap
 
-- True two-column sidebar layout.
 - An optional thin HTTP service (`POST .cv → .tex/.pdf`) so backends can call it
   directly instead of shelling out.
+- More resume templates beyond Jake (pluggable renderer / `--template`).

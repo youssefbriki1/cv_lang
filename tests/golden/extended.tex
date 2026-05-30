@@ -1,0 +1,111 @@
+\documentclass[letterpaper,11pt]{article}
+
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\addtolength{\oddsidemargin}{-0.5in}
+\addtolength{\evensidemargin}{-0.5in}
+\addtolength{\textwidth}{1in}
+\addtolength{\topmargin}{-.5in}
+\addtolength{\textheight}{1.0in}
+
+\urlstyle{same}
+
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+% Section heading formatting
+\titleformat{\section}{
+  \vspace{-4pt}\scshape\raggedright\large
+}{}{0em}{}[\color{black}\titlerule \vspace{-5pt}]
+
+% Resume helper macros (width-relative so they work in either column)
+\newcommand{\resumeItem}[1]{
+  \item\small{
+    {#1 \vspace{-2pt}}
+  }
+}
+
+\newcommand{\resumeSubheading}[4]{
+  \vspace{-2pt}\item
+    \begin{tabular*}{0.97\linewidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & #2 \\
+      \textit{\small#3} & \textit{\small #4} \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeSubSubheading}[2]{
+    \item
+    \begin{tabular*}{0.97\linewidth}{l@{\extracolsep{\fill}}r}
+      \textit{\small#1} & \textit{\small #2} \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\renewcommand\labelitemii{$\vcenter{\hbox{\tiny$\bullet$}}$}
+
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.15in, label={}]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-5pt}}
+
+\begin{document}
+
+\noindent
+\begin{minipage}[t]{0.30\textwidth}
+\raggedright
+{\Huge \scshape Youssef Briki}\\[8pt]
+\small
+Montréal, QC\\[4pt]
+\href{mailto:youssef@example.com}{\underline{youssef@example.com}}\\[4pt]
+\href{https://github.com/youssefbriki1}{\underline{github.com/youssefbriki1}}\\[4pt]
+\href{https://linkedin.com/in/youssefbriki}{\underline{linkedin.com/in/youssefbriki}}\\[4pt]
+English, French\\[4pt]
+Python, Rust, Java, RAG, KG, vLLM, FAISS, Docker
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.66\textwidth}
+\section{Summary}
+\resumeItemListStart
+  \resumeItem{SWE + NLP, focused on RAG and knowledge graphs for automation.}
+\resumeItemListEnd
+
+\section{Experience}
+  \resumeSubHeadingListStart
+    \resumeSubheading
+      {\href{https://desjardins.com}{\underline{AI Engineering Intern}}}{Summer 2025}
+      {Desjardins}{Montréal, QC}
+      \resumeItemListStart
+        \resumeItem{\textit{Stack:} Python, LangChain, FAISS, vLLM, Docker, GCP}
+        \resumeItem{Built domain RAG over Desjardins knowledge graph}
+        \resumeItem{Cut retrieval P95 by 35\% via cache + re-ranking}
+      \resumeItemListEnd
+  \resumeSubHeadingListEnd
+
+\section{Projects}
+  \resumeSubHeadingListStart
+    \resumeSubheading
+      {\href{https://github.com/your/labmate}{\underline{LabMate – Lab Q\&A Agent}}}{2024–2025}
+      {Acceleration Consortium}{}
+      \resumeItemListStart
+        \resumeItem{\textit{Stack:} Python, vLLM, spaCy-coref, SRL, gRPC, FAISS}
+        \resumeItem{Procedural KG extraction and multi-hop retrieval}
+        \resumeItem{gRPC microservices for SRL/NER/coref; Dockerized}
+      \resumeItemListEnd
+  \resumeSubHeadingListEnd
+
+\end{minipage}
+
+\end{document}

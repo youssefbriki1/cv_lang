@@ -1,35 +1,35 @@
 # Extended constructs: summary, per-entry location/link/stack, and a sidebar.
-name "Youssef Briki"
+name "Jordan Lee"
 
 summary:
-  - "SWE + NLP, focused on RAG and knowledge graphs for automation."
+  - "Software engineer focused on RAG and knowledge graphs for automation."
 
 section "Experience":
-  entry role "AI Engineering Intern"
-        org  "Desjardins"
-        when "Summer 2025"
-        location "Montréal, QC"
-        link "https://desjardins.com"
-        stack: "Python, LangChain, FAISS, vLLM, Docker, GCP"
+  entry role "Software Engineer"
+        org  "Acme Corp"
+        when "2023–2025"
+        location "City, Country"
+        link "https://example.com"
+        stack: "Python, LangChain, FAISS, Docker, GCP"
         bullets:
-          - "Built domain RAG over Desjardins knowledge graph"
-          - "Cut retrieval P95 by 35% via cache + re-ranking"
+          - "Built a domain RAG system over a knowledge graph"
+          - "Cut retrieval P95 by 35% via caching and re-ranking"
 
 section "Projects":
-  entry role "LabMate – Lab Q&A Agent"
-        org  "Acceleration Consortium"
+  entry role "Lab Q&A Agent"
+        org  "Personal project"
         when "2024–2025"
-        link "https://github.com/your/labmate"
-        stack: "Python, vLLM, spaCy-coref, SRL, gRPC, FAISS"
+        link "https://github.com/jordanlee/labmate"
+        stack: "Python, vector search, gRPC, NLP"
         bullets:
-          - "Procedural KG extraction and multi-hop retrieval"
-          - "gRPC microservices for SRL/NER/coref; Dockerized"
+          - "Procedural knowledge-graph extraction and multi-hop retrieval"
+          - "gRPC microservices for NLP tasks; Dockerized"
 
 # Jake-style sidebar (folded into the header in this renderer)
 sidebar:
-  location "Montréal, QC"
-  email "youssef@example.com"
-  github "github.com/youssefbriki1"
-  linkedin "linkedin.com/in/youssefbriki"
+  location "City, Country"
+  email "jordan.lee@example.com"
+  github "github.com/jordanlee"
+  linkedin "linkedin.com/in/jordanlee"
   languages "English, French"
-  skills "Python, Rust, Java, RAG, KG, vLLM, FAISS, Docker"
+  skills "Python, Rust, Java, RAG, Docker"

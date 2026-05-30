@@ -1,30 +1,30 @@
-name "Youssef Briki"
-contact email "youssef@example.com", github "youssefbriki1", location "Montréal, QC"
+name "Jordan Lee"
+contact email "jordan.lee@example.com", github "jordanlee", location "City, Country"
 
 section "Experience":
-  entry role "AI Engineering Intern"
-        org  "Desjardins"
-        when "Summer 2025"
+  entry role "Software Engineer"
+        org  "Acme Corp"
+        when "2023–2025"
         bullets:
-          - "Built domain-specific RAG on a knowledge graph"
+          - "Built a domain-specific RAG system on a knowledge graph"
           - "Reduced retrieval latency by 35% (P95)"
-          - "Productionized pipelines on Balam HPC cluster"
+          - "Productionized data pipelines on an HPC cluster"
 
 section "Projects":
-  entry role "LabMate – Lab Q&A Agent"
-        org  "Personal / AC collab"
+  entry role "Lab Q&A Agent"
+        org  "Personal project"
         when "2024–2025"
         bullets:
-          - "Multi-hop retrieval over manuals; vLLM serving"
-          - "Tools: FAISS, LangChain, spaCy coref, SRL microservices"
+          - "Multi-hop retrieval over manuals with local model serving"
+          - "Tools: vector search, orchestration, NLP microservices"
 
 section "Education":
   entry role "B.Sc. Computer Science"
-        org  "Université de Montréal"
-        when "2022–2026"
+        org  "State University"
+        when "2020–2024"
         bullets:
-          - "GPA 3.7/4.3, ICPC participant"
-          - "NLP, ML, HPC coursework"
+          - "GPA 3.7/4.0; programming-contest participant"
+          - "Coursework: NLP, ML, HPC"
 
 section "Skills":
-  tags: "Python, Rust, Java, LangChain, vLLM, FAISS, Docker, gRPC, HPC"
+  tags: "Python, Rust, Java, Docker, gRPC, SQL, Linux"

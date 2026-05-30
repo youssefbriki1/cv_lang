@@ -25,7 +25,7 @@ fn assert_standalone(tex: &str) {
 fn core_example_compiles() {
     let tex = compile_example("core.cv");
     assert_standalone(&tex);
-    assert!(tex.contains("Youssef Briki"));
+    assert!(tex.contains("Jordan Lee"));
     assert!(tex.contains("\\resumeSubheading"));
     // The `&` and `%` in the source must be escaped.
     assert!(tex.contains("Lab Q\\&A Agent"));
@@ -44,7 +44,7 @@ fn extended_example_compiles() {
     // Per-entry stack rendered as an item.
     assert!(tex.contains("\\textit{Stack:}"));
     // `link` turns the role into a hyperlink.
-    assert!(tex.contains("\\href{https://desjardins.com}"));
+    assert!(tex.contains("\\href{https://example.com}"));
     // Sidebar fields folded into the header.
     assert!(tex.contains("English, French"));
 }

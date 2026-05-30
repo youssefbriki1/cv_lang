@@ -8,15 +8,15 @@ concise `.cv` file; `cv_lang` compiles it into a complete LaTeX document
 and, optionally, a PDF.
 
 ```
-name "Youssef Briki"
-contact email "youssef@example.com", github "youssefbriki1", location "Montréal, QC"
+name "Jordan Lee"
+contact email "jordan.lee@example.com", github "jordanlee", location "City, Country"
 
 section "Experience":
-  entry role "AI Engineering Intern"
-        org  "Desjardins"
-        when "Summer 2025"
+  entry role "Software Engineer"
+        org  "Acme Corp"
+        when "2023–2025"
         bullets:
-          - "Built domain-specific RAG on a knowledge graph"
+          - "Built a domain-specific RAG system on a knowledge graph"
           - "Reduced retrieval latency by 35% (P95)"
 
 section "Skills":
@@ -138,20 +138,20 @@ summary:
   - "SWE + NLP, focused on RAG and knowledge graphs."
 
 section "Experience":
-  entry role "AI Engineering Intern"
-        org  "Desjardins"
-        when "Summer 2025"
-        location "Montréal, QC"
-        link "https://desjardins.com"
+  entry role "Software Engineer"
+        org  "Acme Corp"
+        when "2023–2025"
+        location "City, Country"
+        link "https://example.com"
         stack: "Python, LangChain, FAISS, vLLM"
         bullets:
-          - "Built domain RAG over the knowledge graph"
+          - "Built a domain RAG system over the knowledge graph"
 
 sidebar:
-  location "Montréal, QC"
-  email "youssef@example.com"
-  github "github.com/youssefbriki1"
-  linkedin "linkedin.com/in/youssefbriki"
+  location "City, Country"
+  email "jordan.lee@example.com"
+  github "github.com/jordanlee"
+  linkedin "linkedin.com/in/jordanlee"
   languages "English, French"
   skills "Python, Rust, RAG, Docker"
 ```

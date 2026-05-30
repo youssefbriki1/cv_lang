@@ -1,33 +1,33 @@
-name "Youssef Briki"
-contact email "youssef@example.com", github "youssefbriki1"
+name "Jordan Lee"
+contact email "jordan.lee@example.com", github "jordanlee"
 
 summary:
-  - "Undergrad CS (grad 2026). Passion: NLP + HPC; building reliable RAG."
+  - "CS graduate focused on NLP and HPC; building reliable RAG systems."
 
 section "Experience":
   entry role "NLP Intern"
-        org  "AC / UofT"
-        when "Winter 2025"
-        stack: "Python, spaCy, SRL, FAISS"
+        org  "Globex"
+        when "Winter 2024"
+        stack: "Python, spaCy, FAISS"
         bullets:
-          - "Authored SRL microservice used by 2 internal teams"
-          - "Cut preprocessing time 40% by batching + caching"
+          - "Authored an NLP microservice used by two internal teams"
+          - "Cut preprocessing time 40% by batching and caching"
 
 section "Projects":
   entry role "KG-Builder"
-        org  "Course + personal"
-        when "2024"
-        link "https://github.com/you/kg-builder"
+        org  "Personal project"
+        when "2023"
+        link "https://github.com/jordanlee/kg-builder"
         stack: "RDF, NetworkX, PostgreSQL"
         bullets:
-          - "Turned papers into procedural graphs; query with Cypher-like DSL"
+          - "Turned documents into procedural graphs; query with a small DSL"
 
 section "Education":
   entry role "B.Sc. Computer Science"
-        org  "UdeM"
-        when "2022–2026"
+        org  "State University"
+        when "2020–2024"
         bullets:
-          - "GPA 3.7/4.3; relevant: NLP, ML, Databases, Parallel Prog"
+          - "GPA 3.7/4.0; relevant: NLP, ML, Databases, Parallel Programming"
 
 section "Skills":
   tags: "Python, Rust, Java, SQL, Docker, Git, Linux"

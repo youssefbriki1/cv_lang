@@ -362,12 +362,12 @@ mod tests {
     #[test]
     fn parses_core_example() {
         let src = "\
-name \"Youssef Briki\"
-contact email \"y@example.com\", github \"youssefbriki1\"
+name \"Jordan Lee\"
+contact email \"jordan.lee@example.com\", github \"jordanlee\"
 
 section \"Experience\":
-  entry role \"AI Engineering Intern\"
-        org  \"Desjardins\"
+  entry role \"Software Engineer\"
+        org  \"Acme Corp\"
         when \"Summer 2025\"
         bullets:
           - \"Built RAG\"
@@ -377,13 +377,13 @@ section \"Skills\":
   tags: \"Python, Rust\"
 ";
         let (doc, warnings) = parse_src(src);
-        assert_eq!(doc.name.as_deref(), Some("Youssef Briki"));
+        assert_eq!(doc.name.as_deref(), Some("Jordan Lee"));
         assert_eq!(doc.contact.len(), 2);
         assert_eq!(
             doc.contact[0],
             Field {
                 key: "email".into(),
-                value: "y@example.com".into()
+                value: "jordan.lee@example.com".into()
             }
         );
         assert_eq!(doc.sections.len(), 2);
@@ -392,8 +392,8 @@ section \"Skills\":
             SectionBody::Entries(es) => {
                 assert_eq!(es.len(), 1);
                 let e = &es[0];
-                assert_eq!(e.role.as_deref(), Some("AI Engineering Intern"));
-                assert_eq!(e.org.as_deref(), Some("Desjardins"));
+                assert_eq!(e.role.as_deref(), Some("Software Engineer"));
+                assert_eq!(e.org.as_deref(), Some("Acme Corp"));
                 assert_eq!(e.when.as_deref(), Some("Summer 2025"));
                 assert_eq!(e.bullets, vec!["Built RAG", "Cut latency 35%"]);
             }
@@ -410,10 +410,10 @@ section \"Skills\":
     fn parses_extended_entry_fields() {
         let src = "\
 section \"Projects\":
-  entry role \"LabMate\"
+  entry role \"Lab Agent\"
         org  \"Personal\"
         when \"2024\"
-        location \"Montreal\"
+        location \"City\"
         link \"https://example.com\"
         stack: \"Python, vLLM\"
         bullets:
@@ -424,7 +424,7 @@ section \"Projects\":
             panic!()
         };
         let e = &es[0];
-        assert_eq!(e.location.as_deref(), Some("Montreal"));
+        assert_eq!(e.location.as_deref(), Some("City"));
         assert_eq!(e.link.as_deref(), Some("https://example.com"));
         assert_eq!(e.stack.as_deref(), Some("Python, vLLM"));
         assert!(warnings.is_empty(), "unexpected warnings: {warnings:?}");
@@ -437,8 +437,8 @@ summary:
   - \"SWE + NLP\"
 
 sidebar:
-  location \"Montreal\"
-  email \"y@example.com\"
+  location \"City\"
+  email \"jordan.lee@example.com\"
 ";
         let (doc, _) = parse_src(src);
         assert_eq!(doc.summary, vec!["SWE + NLP"]);

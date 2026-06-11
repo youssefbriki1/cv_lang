@@ -2,7 +2,6 @@
 
 # Generated LaTeX artifacts from compiling .cv files
 *.tex
-*.pdf
 *.aux
 *.log
 *.out
